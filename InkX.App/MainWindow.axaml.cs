@@ -13,6 +13,7 @@ namespace InkX.App
         public MainWindow()
         {
             InitializeComponent();
+            this.Focus();
 
             DrawCanvas.PointerPressed += OnPointerPressed;
             DrawCanvas.PointerMoved += OnPointerMoved;
@@ -21,12 +22,12 @@ namespace InkX.App
 
         private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
         {
-             lastPoint = e.GetPosition(DrawCanvas);
+            lastPoint = e.GetPosition(DrawCanvas);
         }
 
         private void OnPointerMoved(object? sender, PointerEventArgs e)
         {
-            if(lastPoint == null)
+            if (lastPoint == null)
                 return;
 
             var currentPoint = e.GetPosition(DrawCanvas);
@@ -47,6 +48,15 @@ namespace InkX.App
         private void OnPointerReleased(object? sender, PointerReleasedEventArgs e)
         {
             lastPoint = null;
+        }
+
+        private void OnKeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.C)
+            {
+                DrawCanvas.Children.Clear();
+                lastPoint = null; 
+            }
         }
     }
 }
