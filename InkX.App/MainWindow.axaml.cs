@@ -5,7 +5,6 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using System;
-using System.Numerics;
 
 namespace InkX.App
 {
