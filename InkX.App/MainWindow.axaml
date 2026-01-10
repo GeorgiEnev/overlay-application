@@ -12,12 +12,7 @@
         CanResize="False"
         Topmost="True"
         ShowInTaskbar="False">
-
-    <TextBlock
-        Text="InkX Overlay Active"
-        Foreground="Red"
-        FontSize="24"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"/>
+        
+        <Canvas Name="DrawCanvas" Background="Transparent"/>
 
 </Window>
