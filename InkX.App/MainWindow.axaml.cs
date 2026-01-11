@@ -4,6 +4,8 @@ using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using System;
 
 namespace InkX.App
@@ -26,10 +28,13 @@ namespace InkX.App
         private const double BrushStep = 2;
 
         private bool isColorPopupOpen;
+        private const int colorPickerSize = 180;
+        private double pickerHue = 0.0;
 
         public MainWindow()
         {
             InitializeComponent();
+            GenerateColorPickerBitmap();
             Focus();
 
             ToolBar.RenderTransform = toolBarTransform;
@@ -163,6 +168,63 @@ namespace InkX.App
 
         private void OnColorPickerPressed(object? sender, PointerPressedEventArgs e)
         {
+        }
+
+        private void GenerateColorPickerBitmap()
+        {
+            var bitmap = new WriteableBitmap(
+                new PixelSize(colorPickerSize, colorPickerSize),
+                new Vector(96, 96),
+                PixelFormat.Bgra8888,
+                AlphaFormat.Unpremul);
+
+            using var fb = bitmap.Lock();
+
+            unsafe
+            {
+                uint* buffer = (uint*)fb.Address;
+
+                for (int y = 0; y < colorPickerSize; y++)
+                {
+                    for (int x = 0; x < colorPickerSize; x++)
+                    {
+                        double s = (double)x / (colorPickerSize - 1);
+                        double v = 1.0 - (double)y / (colorPickerSize - 1);
+
+                        var color = HsvToColor(pickerHue, s, v);
+
+                        buffer[y * colorPickerSize + x] =
+                            ((uint)color.A << 24) |
+                            ((uint)color.B << 16) |
+                            ((uint)color.G << 8) |
+                            color.R;
+                    }
+                }
+            }
+
+            ColorPickerImage.Source = bitmap;
+        }
+
+        private static Color HsvToColor(double h, double s, double v)
+        {
+            double c = v * s;
+            double x = c * (1 - Math.Abs((h / 60) % 2 - 1));
+            double m = v - c;
+
+            double r = 0, g = 0, b = 0;
+
+            if (h < 60) { r = c; g = x; }
+            else if (h < 120) { r = x; g = c; }
+            else if (h < 180) { g = c; b = x; }
+            else if (h < 240) { g = x; b = c; }
+            else if (h < 300) { r = x; b = c; }
+            else { r = c; b = x; }
+
+            return Color.FromArgb(
+                255,
+                (byte)((r + m) * 255),
+                (byte)((g + m) * 255),
+                (byte)((b + m) * 255));
         }
     }
 }
