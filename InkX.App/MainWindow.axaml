@@ -92,16 +92,31 @@
 					BorderBrush="#555"
 					BorderThickness="1"
 					CornerRadius="8"
-					Padding="6">
+					Padding="8">
 
-				<!-- HSV picker surface -->
-				<Image x:Name="ColorPickerImage"
-					   Width="180"
-					   Height="180"
-					   Stretch="Fill"
-					   PointerPressed="OnColorPickerPressed"/>
+				<StackPanel Orientation="Horizontal" Spacing="8">
+
+					<!-- HSV square -->
+					<Image x:Name="ColorPickerImage"
+						   Width="180"
+						   Height="180"
+						   Stretch="Fill"
+						   PointerPressed="OnColorPickerPressed"/>
+
+					<!-- Hue slider -->
+					<Slider x:Name="HueSlider"
+							Orientation="Vertical"
+							Width="18"
+							Minimum="0"
+							Maximum="360"
+							Value="0"
+							ValueChanged="OnHueChanged"/>
+
+				</StackPanel>
+
 			</Border>
 		</Popup>
 
 	</Grid>
+
 </Window>

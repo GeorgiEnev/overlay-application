@@ -239,5 +239,11 @@ namespace InkX.App
                 (byte)((g + m) * 255),
                 (byte)((b + m) * 255));
         }
+
+        private void OnHueChanged(object? sender, Avalonia.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            pickerHue = e.NewValue;
+            GenerateColorPickerBitmap();
+        }
     }
 }
