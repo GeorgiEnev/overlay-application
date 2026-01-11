@@ -29,7 +29,7 @@ namespace InkX.App
 
         private bool isColorPopupOpen;
         private const int colorPickerSize = 180;
-        private double pickerHue = 0.0;
+        private double pickerHue = 240;
 
         public MainWindow()
         {
@@ -168,6 +168,19 @@ namespace InkX.App
 
         private void OnColorPickerPressed(object? sender, PointerPressedEventArgs e)
         {
+            var pos = e.GetPosition(ColorPickerImage);
+
+            double s = pos.X / colorPickerSize;
+            double v = 1.0 - (pos.Y / colorPickerSize);
+
+            s = Math.Clamp(s, 0, 1);
+            v = Math.Clamp(v, 0, 1);
+
+            var color = HsvToColor(pickerHue, s, v);
+            currentBrush = new SolidColorBrush(color);
+
+            ColorPopup.IsOpen = false;
+            isColorPopupOpen = false;
         }
 
         private void GenerateColorPickerBitmap()
