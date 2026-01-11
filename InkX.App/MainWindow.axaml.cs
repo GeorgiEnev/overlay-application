@@ -12,7 +12,7 @@ namespace InkX.App
     {
         private Point? lastPoint;
         private double brushSize = 2;
-        private IBrush currentBrush = Brushes.Red;
+        private IBrush currentBrush = Brushes.Black;
 
         private bool isToolBarVisible = true;
         private bool isDraggingToolBar;
@@ -151,16 +151,6 @@ namespace InkX.App
         {
             isDraggingToolBar = false;
             e.Pointer.Capture(null);
-        }
-
-        private void SetRed(object? sender, RoutedEventArgs e)
-        {
-            currentBrush = Brushes.Red;
-        }
-
-        private void SetBlue(object? sender, RoutedEventArgs e)
-        {
-            currentBrush = Brushes.Blue;
         }
     }
 }
