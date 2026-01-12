@@ -285,7 +285,12 @@ namespace InkX.App
         private void OnHueChanged(object? sender, Avalonia.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
             pickerHue = 360.0 - e.NewValue;
+
             GenerateColorPickerBitmap();
+
+            var color = HsvToColor(pickerHue, selectedS, selectedV);
+            currentBrush = new SolidColorBrush(color);  
+
             UpdateColorPickerDot();
         }
 
