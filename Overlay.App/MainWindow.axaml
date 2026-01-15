@@ -24,9 +24,6 @@
 
 		<!-- Toolbar -->
 		<Border x:Name="ToolBar"
-				PointerPressed="OnToolBarPointerPressed"
-				PointerMoved="OnToolBarPointerMoved"
-				PointerReleased="OnToolBarPointerReleased"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Top"
 				Margin="0,20,0,0"
